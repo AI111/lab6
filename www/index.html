@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head >
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+  <title></title>
+
+  <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <link href="lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+  <link href="css/ionic.app.css" rel="stylesheet">
+  -->
+
+  <!-- ionic/angularjs js -->
+
+  <script src="lib/webcomponentsjs/webcomponents.min.js"></script>
+  <script src="lib/angular/angular.min.js"></script>
+  <!-- cordova script (this will be a 404 during development) -->
+  <script src="cordova.js"></script>
+  <link rel="import" href="lib/core-toolbar/core-toolbar.html">
+  <link rel="import" href="lib/core-toolbar/core-toolbar.html">
+  <link rel="import" href="lib/core-header-panel/core-header-panel.html">
+  <link rel="import" href="lib/core-icons/core-icons.html">
+  <link rel="import" href="lib/paper-icon-button/paper-icon-button.html">
+  <link rel="import" href="lib/core-header-panel/core-header-panel.html">
+  <link rel="import" href="lib/core-drawer-panel/core-drawer-panel.html">
+  <link rel="import" href="lib/core-scaffold/core-scaffold.html">
+  <link rel="import" href="lib/core-animated-pages/core-animated-pages.html">
+  <link rel="import" href="lib/core-animated-pages/transitions/slide-from-right.html">
+  <link rel="import" href="lib/core-menu/core-menu.html">
+  <link rel="import" href="lib/paper-fab/paper-fab.html">
+  <link rel="import" href="lib/paper-input/paper-input.html">
+  <link rel="import" href="lib/paper-input/paper-input-decorator.html">
+
+
+
+  <!-- your app's js -->
+  <script src="js/app.js"></script>
+  <script src="js/controllers.js"></script>
+  <!--<script src="js/services.js"></script>-->
+</head>
+<body ng-app="MyApp" ng-controller="ListCtrl" fullbleed vertical layout unresolved>
+
+<core-header-panel flex>
+  <core-toolbar id="mainheader">
+    <paper-icon-button id="navicon"
+                       icon="arrow-back" ng-click="home()"></paper-icon-button>
+    <span flex>Title</span>
+    <paper-icon-button id="searchbutton"
+                       icon="search"></paper-icon-button>
+  </core-toolbar>
+
+
+  <div>
+    <core-animated-pages transitions="slide-from-right" id="core-pages">
+      <section class="list-group" id="user_list">
+        <div  ng-repeat="(index, user) in users" >
+          <div layout vertical id="useritem" class="list-group-item" ng-click="openUserEditPage(index)">
+            <div><h4>{{user.name+' '+user.lastname}}</h4></div>
+            <div horizontal layout>
+              <div one>  phone: {{user.phone}} </div> <div>   pasport # {{user.pasport}} </div></div>
+          </div>
+
+        </div>
+      </section>
+      <section >
+      <div id="page2">
+        <form>
+          <div class="form-group">
+            <label>Name</label>
+            <input type="text" class="form-control"  ng-model="user.name" placeholder="User name">
+          </div>
+          <div class="form-group">
+            <label>Lastname</label>
+            <input type="text" class="form-control"  ng-model="user.lastname" placeholder="lastname">
+          </div>
+          <div class="form-group">
+            <label>Phone</label>
+            <input type="text" class="form-control"  ng-model="user.phone" placeholder="lastname">
+          </div>
+          <div class="form-group">
+            <label>Paspport</label>
+            <input type="text" class="form-control"  ng-model="user.pasport" placeholder="lastname">
+          </div>
+
+        </form>
+        <table ng-show="user.account" class="table table-condensed">
+          <tr>
+            <td>№</td><td>Acaunt id</td> <td> value </td>
+          </tr>
+          <tr ng-repeat="(index,account) in user.account">
+            <td>{{index}}</td><td>{{account.id}}</td><td ng-init="Total = Total + account.sum">{{account.sum}}</td>
+
+          </tr>
+          <tr>
+            <td>№</td><td>Acaunt id</td> <td> j{{Total}} </td>
+          </tr>
+
+        </table>
+
+      </div>
+      </section>
+    </core-animated-pages>
+  </div>
+  <div>
+    <paper-fab icon="add" ng-click="addUser()" style="position: absolute;bottom: 20px;right: 20px"></paper-fab>
+  </div>
+</core-header-panel>
+
+</body>
+</html>
