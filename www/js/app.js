@@ -1,10 +1,12 @@
+var phonecatApp = angular.module('MyApp', ['ionic', 'starter.controllers']);
 
-var phonecatApp = angular.module('MyApp', ['starter.controllers']);
-
-phonecatApp.controller('ListCtrl', function ($scope) {
-    var vm = this;
+phonecatApp.controller('ListCtrl', function ($scope, $ionicListDelegate) {
+    $scope.shouldShowDelete = false;
+    $scope.shouldShowReorder = false;
+    $scope.listCanSwipe = true
     $scope.Total = 0;
     $scope.selected=0;
+    this.changedUserId = null;
     var pages = document.getElementById('core-pages');
     $scope.users=[
         {
@@ -41,6 +43,7 @@ phonecatApp.controller('ListCtrl', function ($scope) {
         console.log("ADD User")
         switch (pages.selected){
             case 0:
+                changedUserId = null;
                 $scope.user={ name:'',lastname:'', pasport:'', phone:'',account:[]};
                 pages.selected = 1;
                 break;
@@ -54,19 +57,28 @@ phonecatApp.controller('ListCtrl', function ($scope) {
 
     };
     $scope.getSum= function () {
+        if ($scope.user === null || $scope.user.account.length == 0)return 0;
         if($scope.user.account.length==1)return $scope.user.account[0].sum;
         return $scope.user.account.reduce(function(a, b) {
-            return a.sum + b.sum;
-        });
+            return a + b.sum;
+        }, 0);
     }
     $scope.openUserEditPage= function(i){
+        $ionicListDelegate.closeOptionButtons();
+
         pages.selected = 1;
         console.log(i);
+        changedUserId = i;
         $scope.user=$scope.users[i];
         console.log(JSON.stringify($scope.user));
     };
+    $scope.saveData = function () {
+        $scope.users.push($scope.user);
+        pages.selected = 0
+
+    }
     $scope.home=function(){
         pages.selected = 0;
-    };//
+    };
 
 });
