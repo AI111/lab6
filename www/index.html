@@ -55,57 +55,59 @@
 
   <div>
     <core-animated-pages transitions="slide-from-right" id="core-pages">
-      <section class="list-group" id="user_list">
+      <section class="list" id="user_list">
         <div  ng-repeat="(index, user) in users" >
-          <div layout vertical id="useritem" class="list-group-item" ng-click="openUserEditPage(index)">
-            <div><h4>{{user.name+' '+user.lastname}}</h4></div>
-            <div horizontal layout>
-              <div one>  phone: {{user.phone}} </div> <div>   pasport # {{user.pasport}} </div></div>
+          <div layout vertical id="useritem" class="item" ng-click="openUserEditPage(index)">
+            <div><h2 style="font-weight: bold">{{user.name+' '+user.lastname}}</h2></div>
+            <div horizontal layout style="padding-top: 2%">
+              <div one>
+                <h3>{{user.phone+' '+user.pasport}}</h3>
+              </div>
+            </div>
           </div>
-
-        </div>
+          </div>
       </section>
       <section >
-      <div id="page2">
-        <form>
-          <div class="form-group">
-            <label>Name</label>
-            <input type="text" class="form-control"  ng-model="user.name" placeholder="User name">
-          </div>
-          <div class="form-group">
-            <label>Lastname</label>
-            <input type="text" class="form-control"  ng-model="user.lastname" placeholder="lastname">
-          </div>
-          <div class="form-group">
-            <label>Phone</label>
-            <input type="text" class="form-control"  ng-model="user.phone" placeholder="lastname">
-          </div>
-          <div class="form-group">
-            <label>Paspport</label>
-            <input type="text" class="form-control"  ng-model="user.pasport" placeholder="lastname">
-          </div>
+        <div id="page2">
+          <form>
+            <div class="form-group">
+              <label>Name</label>
+              <input type="text" class="form-control"  ng-model="user.name" placeholder="User name">
+            </div>
+            <div class="form-group">
+              <label>Lastname</label>
+              <input type="text" class="form-control"  ng-model="user.lastname" placeholder="lastname">
+            </div>
+            <div class="form-group">
+              <label>Phone</label>
+              <input type="text" class="form-control"  ng-model="user.phone" placeholder="lastname">
+            </div>
+            <div class="form-group">
+              <label>Paspport</label>
+              <input type="text" class="form-control"  ng-model="user.pasport" placeholder="lastname">
+            </div>
 
-        </form>
-        <table ng-show="user.account" class="table table-condensed">
-          <tr>
-            <td>№</td><td>Acaunt id</td> <td> value </td>
-          </tr>
-          <tr ng-repeat="(index,account) in user.account">
-            <td>{{index}}</td><td>{{account.id}}</td><td ng-init="Total = Total + account.sum">{{account.sum}}</td>
+          </form>
+          <table ng-show="user.account" class="table table-condensed">
+            <tr>
+              <td>№</td><td>Acaunt id</td> <td> value </td><td> 3%</td>
+            </tr>
+            <tr ng-repeat="(index,account) in user.account">
+              <td>{{index}}</td><td>{{account.id}}</td><td >{{account.sum}}</td><td>{{account.sum*0.03 | number:4}}</td>
 
-          </tr>
-          <tr>
-            <td>№</td><td>Acaunt id</td> <td> j{{Total}} </td>
-          </tr>
+            </tr>
+            <tr ng-show="user.account.length>0">
+              <td>SUMM</td><td></td> <td> {{getSum()}} </td><td>{{getSum()*0.03 | number:4}}</td>
+            </tr>
 
-        </table>
+          </table>
 
-      </div>
+        </div>
       </section>
     </core-animated-pages>
   </div>
   <div>
-    <paper-fab icon="add" ng-click="addUser()" style="position: absolute;bottom: 20px;right: 20px"></paper-fab>
+    <paper-fab id="paper_fab" icon="add" ng-click="add()" style="position: absolute;bottom: 20px;right: 20px"></paper-fab>
   </div>
 </core-header-panel>
 

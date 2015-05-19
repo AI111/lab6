@@ -6,7 +6,6 @@ phonecatApp.controller('ListCtrl', function ($scope) {
     $scope.Total = 0;
     $scope.selected=0;
     var pages = document.getElementById('core-pages');
-
     $scope.users=[
         {
             name:'Sasha',
@@ -25,7 +24,7 @@ phonecatApp.controller('ListCtrl', function ($scope) {
             ]
         },
         {
-            name:'Birislav',
+            name:'Borislav',
             lastname:'Mitrifanov',
             pasport:'BM7854',
             phone:'6578459',
@@ -33,18 +32,33 @@ phonecatApp.controller('ListCtrl', function ($scope) {
                 {
                     id:456,
                     sum:19.2
-                },
-                {
-                    id:53545,
-                    sum:17.2
                 }
             ]
         }
     ];
     $scope.user=null;
-    $scope.addUser = function () {
-        pages.selected = 2;
+    $scope.add = function () {
+        console.log("ADD User")
+        switch (pages.selected){
+            case 0:
+                $scope.user={ name:'',lastname:'', pasport:'', phone:'',account:[]};
+                pages.selected = 1;
+                break;
+            case 1:
+                if($scope.user.account.length<3){
+                    console.log(JSON.stringify($scope.user.account));
+                    $scope.user.account.push({ id:0, sum:1.0});
+                }
+                break;
+        }
+
     };
+    $scope.getSum= function () {
+        if($scope.user.account.length==1)return $scope.user.account[0].sum;
+        return $scope.user.account.reduce(function(a, b) {
+            return a.sum + b.sum;
+        });
+    }
     $scope.openUserEditPage= function(i){
         pages.selected = 1;
         console.log(i);
@@ -54,4 +68,5 @@ phonecatApp.controller('ListCtrl', function ($scope) {
     $scope.home=function(){
         pages.selected = 0;
     };
+
 });
