@@ -67,6 +67,6 @@ phonecatApp.controller('ListCtrl', function ($scope) {
     };
     $scope.home=function(){
         pages.selected = 0;
-    };
+    };//
 
 });
